@@ -107,5 +107,6 @@ export default {
       width: 60%
   .icon-desc
     color: $darkTextColor
+    font-size: .3rem
     ellipsis()
 </style>
