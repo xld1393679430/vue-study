@@ -2,7 +2,7 @@
   <div>
     <div class="title">周末推荐</div>
     <ul>
-      <li class="item border-bottom" v-for="item in list" :key="item.id">
+      <li class="item border-bottom" v-for="item of list" :key="item.id">
         <div class="item-img-wrapper">
           <img class="item-img" :src="item.imgUrl" alt="">
         </div>
