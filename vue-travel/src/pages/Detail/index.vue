@@ -2,25 +2,28 @@
   <div>
     <detail-banner />
     <detail-header />
-    <div class="content"></div>
+    <div class="content">
+      <detail-list />
+    </div>
   </div>
 </template>
 
 <script>
 import DetailBanner from './components/banner'
 import DetailHeader from './components/header'
+import DetailList from './components/list'
 
 export default {
   name: 'Detail',
   components: {
     DetailBanner,
-    DetailHeader
+    DetailHeader,
+    DetailList
   },
 }
 </script>
 
 <style lang='stylus' scoped>
 .content
- background-color pink
  height 50rem
 </style>
