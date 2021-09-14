@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <router-link to="/">
-      <div @click="handleBack" class="iconfont back-icon">&#xe624;</div>
+      <div class="iconfont back-icon">&#xe624;</div>
     </router-link>
     <span>城市选择</span>
   </div>
@@ -10,11 +10,6 @@
 <script>
 export default {
   name: "CityHeader",
-  methods: {
-    handleBack () {
-      // this.$router.back()
-    }
-  }
 };
 </script>
 
