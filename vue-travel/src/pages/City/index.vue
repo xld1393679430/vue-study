@@ -33,7 +33,8 @@ export default {
   },
   methods: {
     getCityData () {
-      axios.get('/api/city.json').then(res => {
+      axios.get('/static/mock/city.json').then(res => {
+      // axios.get('/api/city.json').then(res => {
         if (res.data.ret && res.data.data) {
           const { cities, hotCities} = res.data.data
           this.cities = cities
