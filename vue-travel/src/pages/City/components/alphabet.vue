@@ -6,7 +6,7 @@
       :key="item"
       :ref="item"
       @click="handleClickLetter(item)"
-      @touchstart="handleTouchStart"
+      @touchstart.prevent="handleTouchStart"
       @touchmove="handleTouchMove"
       @touchend="handleTouchEnd"
     >
@@ -86,8 +86,8 @@ export default {
   top 1.8rem
   right 0
   bottom 0
-  width .4rem
-  // background-color #eee
+  width .6rem
+  background-color #eee
   .item
     text-align center
     line-height .44rem

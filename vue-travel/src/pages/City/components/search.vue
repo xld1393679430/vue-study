@@ -76,7 +76,7 @@ export default {
     }
   },
   mounted () {
-    this.bscroll = new Bscroll(this.$refs['search-content'])
+    this.bscroll = new Bscroll(this.$refs['search-content'], { mouseWheel: true, click: true, tap: true })
   },
 };
 </script>

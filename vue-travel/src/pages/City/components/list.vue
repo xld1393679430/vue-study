@@ -49,7 +49,7 @@ export default {
     }
   },
   mounted() {
-    this.bscroll = new Bscroll(this.$refs.wrapper);
+    this.bscroll = new Bscroll(this.$refs.wrapper, { mouseWheel: true, click: true, tap: true });
   },
   computed: {
     ...mapState({

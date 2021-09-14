@@ -5,12 +5,15 @@ import App from './App'
 import router from './router'
 import fastClick from 'fastClick'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import VConsole from 'vconsole'
 import store from './store'
 import 'styles/reset.css'
 import 'styles/border.css'
 import 'styles/iconfont.css'
 import 'swiper/dist/css/swiper.css'
 
+// eslint-disable-next-line no-unused-vars
+const vConsole = new VConsole({ maxLogNumber: 1000 })
 Vue.config.productionTip = false
 fastClick.attach(document.body)
 
