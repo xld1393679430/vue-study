@@ -1,10 +1,10 @@
 <template>
   <div class="icons">
-    <swiper :options="swiperOptions">
+    <swiper :options="swiperOptions" v-if="pages.length">
       <swiper-slide v-for="(page, index) in pages" :key="index">
         <div class="icon" v-for="item in page" :key="item.id">
           <div class="icon-img">
-            <img :src="item.url" alt="icon" />
+            <img :src="item.imgUrl" alt="icon" />
           </div>
           <p class="icon-desc">{{ item.name }}</p>
         </div>
@@ -17,65 +17,21 @@
 <script>
 export default {
   name: "HomeIcons",
+  props: {
+    list: Array,
+  },
   data() {
     return {
       swiperOptions: {
         pagination: ".swiper-pagination",
         loop: true
-      },
-      icons: [
-        {
-          id: 1,
-          url: "https://s.qunarzz.com/homenode/images/touchheader/hotel.png",
-          name: "酒店"
-        },
-        {
-          id: 2,
-          url: "https://s.qunarzz.com/homenode/images/touchheader/flight.png",
-          name: "机票"
-        },
-        {
-          id: 3,
-          url: "https://s.qunarzz.com/homenode/images/touchheader/train.png",
-          name: "火车票"
-        },
-        {
-          id: 4,
-          url: "https://s.qunarzz.com/homenode/images/touchheader/package.png",
-          name: "度假"
-        },
-        {
-          id: 5,
-          url: "https://s.qunarzz.com/homenode/images/touchheader/package.png",
-          name: "度假"
-        },
-        {
-          id: 6,
-          url: "https://s.qunarzz.com/homenode/images/touchheader/package.png",
-          name: "度假"
-        },
-        {
-          id: 7,
-          url: "https://s.qunarzz.com/homenode/images/touchheader/package.png",
-          name: "度假"
-        },
-        {
-          id: 8,
-          url: "https://s.qunarzz.com/homenode/images/touchheader/package.png",
-          name: "度假"
-        },
-        {
-          id: 9,
-          url: "https://s.qunarzz.com/homenode/images/touchheader/package.png",
-          name: "度假度假度假度假"
-        }
-      ]
+      }
     }
   },
   computed: {
     pages () {
       const pages = []
-      this.icons.forEach((item, index) => {
+      this.list.forEach((item, index) => {
         const page = Math.floor(index / 8)
         if (!pages[page]) {
           pages[page] = []

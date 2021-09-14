@@ -4,7 +4,7 @@
     <ul>
       <li class="item border-bottom" v-for="item in list" :key="item.id">
         <div class="item-img-wrapper">
-          <img class="item-img" :src="item.url" alt="">
+          <img class="item-img" :src="item.imgUrl" alt="">
         </div>
         <div class="item-info">
           <p class="item-title">{{item.title}}</p>
@@ -19,28 +19,11 @@
 <script>
 export default {
   name: 'HomeRecommend',
+  props: {
+    list: Array,
+  },
   data () {
     return {
-      list: [
-        {
-          id: 1,
-          url: 'https://imgs.qunarzz.com/p/tts6/2101/a1/1c0a59b31b18302.jpg_160x160_98041ead.jpg',
-          title: '兵马俑半日游',
-          desc: '兵马俑半日游【多场次上门接/可选长恨歌/人工讲解/赠皮影】'
-        },
-         {
-          id: 2,
-          url: 'https://imgs.qunarzz.com/p/tts6/2101/a1/1c0a59b31b18302.jpg_160x160_98041ead.jpg',
-          title: '兵马俑半日游',
-          desc: '兵马俑半日游【多场次上门接/可选长恨歌/人工讲解/赠皮影】'
-        },
-         {
-          id: 3,
-          url: 'https://imgs.qunarzz.com/p/tts6/2101/a1/1c0a59b31b18302.jpg_160x160_98041ead.jpg',
-          title: '兵马俑半日游',
-          desc: '兵马俑半日游【多场次上门接/可选长恨歌/人工讲解/赠皮影】'
-        }
-      ]
     }
   }
 }
