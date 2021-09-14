@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{message}}</div>
+        <book :a="a"></book>
+        <!-- a1 类型错误 -->
+        <!-- <book :a="a1"></book>  -->
+
+        <book :b="b"></book>
+        <!-- b1 类型错误 -->
+        <!-- <book :b="b1"></book> -->
+
+        <book :c="c"></book>
+        <book :c="c1"></book>
+
+        <!-- 如果子组件props中没有定义的属性就会显示在HTML结构中 -->
+        <book noProps='非Props特性'></book>    
+    </div>
+    <script>
+        Vue.component('book', {
+            props: {
+                a: [String, Number],
+                b: {
+                    type: Number
+                },
+                c: {
+                    type: Number,
+                    require: true,
+                    default: 300 ,
+                    validator(value) {
+                        return value > 200
+                    }
+                }
+            },
+            template: `
+                <div>
+                    <div>{{a}}</div> 
+                    <div>{{b}}</div>  
+                    <div>{{c}}</div>  
+               </div>
+                  
+            `
+        })
+
+        var vue = new Vue({
+            el: '#root',
+            data: {
+                message: 'hello world',
+                a: '哈利波特',
+                a1: {a: 1},
+                b: 1,
+                b1: '1',
+                c: 300,
+                c1: 100,
+            }
+        })
+    </script>
+</body>
+</html>

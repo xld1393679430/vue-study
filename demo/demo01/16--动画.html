@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .fade-enter {
+            opacity: 0;
+        }
+        .fade-enter-active {
+            transition: opacity 2s;
+        }
+        .fade-leave-to {
+            opacity: 0;
+        }
+        .fade-leave-active {
+            transition: opacity 2s;
+        }
+    </style>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{message}}</div>
+        <transition name="fade">
+            <div v-if="show">我是内容</div>
+        </transition>
+        <button @click="handleToggle">切换内容显示</button>
+    </div>
+    <script>
+        // 如果不在transition标签上加name="fade"属性 那么过度动画则默认以`v`开头 比如 v-enter
+        var vue = new Vue({
+            el: '#root',
+            data: {
+                message: 'hello world',
+                show: true,
+            },
+            methods: {
+                handleToggle() {
+                    this.show = !this.show
+                }
+            },
+        })
+    </script>
+</body>
+</html>

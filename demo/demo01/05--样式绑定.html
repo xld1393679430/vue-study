@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .blue {
+            background-color: blue;
+        }
+        .red {
+            background-color: red;
+        }
+
+        .activated {
+            background-color: pink;
+        }
+    </style>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div @click="handleClick" :class="{blue: flag, red: !flag}">{{message}}</div>
+
+        <div @click="handleClickActivated" :class="[activated]">activated</div>
+
+        <div @click="handleClick" :style="{'color': flag ? 'blue' : 'red'}">{{message}}</div>
+
+    </div>
+    <script>
+        var vue = new Vue({
+            el: '#root',
+            data: {
+                message: 'hello world',
+                flag: true,
+                activated: ''
+            },
+            methods: {
+                handleClick() {
+                    this.flag = !this.flag
+                },
+                handleClickActivated() {
+                    this.activated = this.activated ? '' : 'activated'
+                },
+            }
+        })
+    </script>
+</body>
+</html>

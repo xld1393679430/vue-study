@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{message}}</div>
+        <son :count="count"></son>
+    </div>
+    <script>
+        Vue.component('son', {
+            props: ['count'],
+            data() {
+                return {
+                    number: this.count
+                }
+            },
+            template: '<div @click="handleAdd">{{number}}</div>',
+            methods: {
+                handleAdd() {
+                    this.number++
+                }
+            },
+        })
+        var vue = new Vue({
+            el: '#root',
+            data: {
+                message: 'hello world',
+                count: 1,
+            },
+            mounted() {
+                setTimeout(() => {
+                    this.count = 10
+                }, 10000)
+            }
+        })
+    </script>
+</body>
+</html>

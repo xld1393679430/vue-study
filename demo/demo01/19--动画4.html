@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画的列表过度</title>
+    <style>
+        .v-enter, .v-leave-to {
+            opacity: 0;
+        }
+        .v-enter-active, .v-leave-active {
+            transition: opacity 1s;
+        }
+    </style>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{message}}</div>
+        <div>
+            <transition-group>
+                <div v-for="item in list" :key="item.id">{{item.text}}</div>
+            </transition-group>
+            <button @click="handleAdd">增加一项</button>
+        </div>
+    </div>
+    <script>
+        // 使用transition-group实现动画的列表过度
+
+        let count = 0
+        var vue = new Vue({
+            el: '#root',
+            data: {
+                message: '动画的列表过度',
+                list: []
+            },
+            methods: {
+                handleAdd() {
+                    this.list.push({
+                        id: count++,
+                        text: `${count} -- hello`
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

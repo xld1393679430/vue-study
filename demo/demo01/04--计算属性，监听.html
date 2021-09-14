@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>message: {{message}}</div>
+        <div>fullName: {{fullName}}</div>
+        <div>totalNum: {{totalNum}}</div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#root',
+            data: {
+                message: 'hello world',
+                firstName: 'a',
+                lastName: 'b',
+                watchValues1: {a: 1, b: { x: 2 }},
+                watchValues2: 2,
+                num1: 10,
+                num2: 20,
+            },
+            computed: {
+                fullName() {
+                    console.log('计算了一次');
+                    return this.firstName + '--' + this.lastName
+                },
+                totalNum: {
+                    get() {
+                        return this.num1 + this.num2
+                    },
+                    set(value) {
+                        this.num1 = value - 1
+                        this.num2 = value - 10
+                    }
+                },
+            },
+            watch: {
+                watchValues1: {
+                    handler(val, newVal) {
+                        console.log(val, newVal);
+                    },
+                    deep: true, // 深度监听
+                    immediate: true, // 立即监听
+                }
+            },
+            mounted() {
+                setTimeout(() => {
+                    this.firstName = 'aaaa'
+                }, 5000)
+            },
+        })
+    </script>
+</body>
+</html>

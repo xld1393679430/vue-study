@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多个元素和组件的过度</title>
+    <style>
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 1s;
+        }
+    </style>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{message}}</div>
+
+        <!-- 切换😊标签 -->
+        <transition name="fade" mode="out-in">
+            <div v-if="show" key="1">hello</div>
+            <div v-else key="2">world</div>
+        </transition>
+        <button @click="handleToggle">点我切换</button>
+
+        <hr />
+
+        <!-- 切换动态组建 -->
+        <transition name="fade" mode="out-in">
+            <component :is="current"></component>   
+        </transition>
+        <button @click="handleToggleComponent">点我切换组件</button>
+    </div>
+    <script>
+        // 如果不在transition标签上加name="fade"属性 那么过度动画则默认以`v`开头 比如 v-enter
+        // 因为vue会尽可能的复用dom 所以需要给切换的组件添加不同的key， 需要重新渲染才能出现动画效果
+        // 添加mode
+
+
+        Vue.component('child-one', {
+            template: "<div>child-one</div>"
+        })
+
+        Vue.component('child-two', {
+            template: "<div>child-two</div>"
+        })
+
+        var vue = new Vue({
+            el: '#root',
+            data: {
+                message: '多个元素和组件的过度',
+                show: true,
+                current: 'child-one'
+            },
+            methods: {
+                handleToggle() {
+                    this.show = !this.show
+                },
+                handleToggleComponent() {
+                    this.current = this.current === 'child-one' ? 'child-two' : 'child-one'
+                }
+            },
+        })
+    </script>
+</body>
+</html>

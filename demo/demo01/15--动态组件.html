@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{message}}</div>
+
+        <!-- 切换组建1 -->
+        <!-- <child-one v-if="type === 'child-one'"></child-one>
+        <child-two v-if="type === 'child-two'"></child-two> -->
+
+        <!-- 切换组建2 -->
+        <component :is="type"></component>
+
+        <button @click="handleToggle">动态切换组件</button>
+    </div>
+    <script>
+        // 通过component标签（vue内置标签）， 配合is属性可以动态切换组件
+
+        //  v-once：（性能更高！！！）使用于切换的组件是静态内容
+        //  在子组件中分别加入v-once，当每次切换组件效果时，不再需要每次都经过 创建——销毁 的过程，而是在内存中直接取用上一次使用过的组件的内容。
+        Vue.component('child-one', {
+            template: "<div v-once>child-one</div>"
+        })
+
+        Vue.component('child-two', {
+            template: "<div v-once>child-two</div>"
+        })
+
+        var vue = new Vue({
+            el: '#root',
+            data: {
+                message: 'hello world',
+                type: 'child-one',
+            },
+            methods: {
+                handleToggle() {
+                    this.type = this.type === 'child-one' ? 'child-two' : 'child-one'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

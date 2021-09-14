@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div>{{message}}</div>
+        <!-- 使用template模版 不想渲染多余的标签 -->
+        <template v-for="(item, index) in list">
+            <h4>{{item.text}}---{{index}}</h4>
+        </template>
+
+        <!--  循环对象 使用  of -->
+        <!--  注意： 修改 userInfo的属性可以渲染， 增加或者删减页面不会重新变化-->
+        <div v-for="(item, key, index) of userInfo">
+            {{item}}--{{key}}--{{index}}
+        </div>
+        <button @click="addProps">增加 userInfo 属性</button>
+        <button @click="deleteProps">删除 userInfo 属性</button>
+        <button @click="changeProps">修改 userInfo 属性</button>
+    </div>
+    <script>
+        var vue = new Vue({
+            el: '#root',
+            data: {
+                message: 'hello world',
+                list: [
+                    {
+                        id: 1,
+                        text: 'a'
+                    }, {
+                        id: 2,
+                        text: 'b'
+                    },
+                ],
+                userInfo: {
+                    name: '章三',
+                    age: 14,
+                    book: '语文',
+                    deleteProps: '删除'
+                }
+            },
+            methods: {
+                addProps() {
+                    // 这种增加属性页面不会重新渲染，既不会更新页面
+                    // this.userInfo.address = '北京'
+
+                    // 可以的方法1 修改原数据的引用
+                    // this.userInfo = {
+                    //     ...this.userInfo,
+                    //     address: '上海'
+                    // }
+
+                    // 可以的方法2 使用vue提供的set方法 
+                    // this.$set(this.userInfo, 'address', '重庆')
+
+                    // 可以的方法3 使用对象或者数组的变异方法
+                    // 数组的变异方法 ['push','pop','shift','unshift','splice','sort','reverse']
+                    this.list.pop()
+                    console.log(this.userInfo);
+                },
+                deleteProps() {
+                    // 这种删除属性页面不会重新渲染，既不会更新页面
+                    // delete this.userInfo.deleteProps
+
+                    // 可以的方法
+
+                    console.log(this.userInfo);
+                },
+                changeProps() {
+                    this.userInfo.name = '李四'
+                    console.log(this.userInfo);
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

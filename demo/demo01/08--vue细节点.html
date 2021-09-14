@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{message}}</div>
+        <table>
+            <tbody>
+                <tr is="row"></tr>
+            </tbody>
+        </table>
+
+        <select name="" id="selectBook">
+            <option value="a" is="row">a</option>
+        </select>
+    </div>
+    <script>
+        // 细节点1
+        // 正常来说 tbody的子节点必须是tr 使用is就可以替换掉tr的内容
+        // 同理select的子节点必须是option， 这里使用is可以把row组件的内容替换成option 不会导致浏览器报错
+
+        // 细节点
+        // vue的根组件的data可以是一个对象 不需要是函数的返回
+        // 子组件的data必须是一个函数 返回对象的结构， 是为了每个子组件有一个独立的数据存储环境
+        Vue.component('row', {
+            data() {
+                return {
+                    content: 'row row row'
+                }
+            },
+            template: '<div>{{content}}</div>'
+        })
+        var vue = new Vue({
+            el: '#root',
+            data: {
+                message: 'hello world',
+            }
+        })
+    </script>
+</body>
+</html>

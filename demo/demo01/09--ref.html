@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div ref="messageRef" @click="handleClick">{{message}}</div>
+        <number ref="numberRef1" @handleclick="handleClickNumber"></number>
+        <number ref="numberRef2" @handleclick="handleClickNumber"></number>
+        <div>total: {{total}}</div>
+    </div>
+    <script>
+        Vue.component('number', {
+            data() {
+                return {
+                    num: 0
+                }
+            },
+            template: "<div @click='handleClick'>{{num}}</div>",
+            methods: {
+                handleClick() {
+                    this.num++
+                    this.$emit('handleclick')
+                }
+            }
+        })
+
+        var vue = new Vue({
+            el: '#root',
+            data: {
+                message: 'hello world',
+                total: 0,
+            },
+            methods: {
+                handleClick() {
+                    console.log(this.$refs.messageRef);
+                },
+                handleClickNumber() {
+                    const { numberRef1, numberRef2 } = this.$refs
+                    this.total = numberRef1.num + numberRef2.num
+                }
+            }
+        })
+    </script>
+</body>
+</html>

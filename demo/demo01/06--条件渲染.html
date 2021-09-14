@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{message}}</div>
+        <div>
+            <div>
+                <h2 v-if="num === 'a'">a: {{num}}</h2>
+                <h2 v-else-if="num === 'b'">b: {{num}}</h2>
+                <h2 v-else>c: {{num}}</h2>
+            </div>
+            <button @click="handleClick('a')">num === a</button>
+            <button @click="handleClick('b')">num === b</button>
+            <button @click="handleClick('c')">num === c</button>
+
+            <div v-show="num === 'a'">{{num}}</div>
+
+            <div>
+                <!-- key的作用： vue尽可能的重用dom结构， 导致input的value没有清空 所有需要使用key -->
+                <div v-if="toggleFlag" key="username">用户名： <input type="text"></div>
+                <div v-if="!toggleFlag" key="password">密码 <input type="text"></div>
+                <button @click="handleToggle">toggle</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var vue = new Vue({
+            el: '#root',
+            data: {
+                message: 'hello world',
+                num: 'a',
+                showForm: true,
+                toggleFlag: true,
+            },
+            methods: {
+                handleClick(value) {
+                    this.num = value
+                },
+                handleToggle() {
+                    this.toggleFlag = !this.toggleFlag
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

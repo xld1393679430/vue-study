@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.2/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div>{{message}}</div>
+        <div>
+            <div>
+                <input type="text" v-model="inputValue" @keyup.enter="add">
+                <button @click="add">提交</button>
+            </div>
+            <ul>
+                <!-- <li v-for="item in list" :key="item">{{item}}</li> -->
+                <todo-item v-for="(item, index) in list" 
+                        :content="item" 
+                        :key="item"
+                        :index="index"
+                        @handledeleteitem="handleDeleteItem(index)"
+                ></todo-item>
+            </ul>
+        </div>
+    </div>
+    <script>
+        Vue.component('todo-item', {
+            props: ["content", "index"],
+            template: "<li @click='handleDelete'>{{this.content}}</li>",
+            methods: {
+                handleDelete() {
+                    console.log(111, this.index);
+                    // !!! 这里不能用驼峰命名
+                    this.$emit('handledeleteitem')
+                }
+            },
+        })
+
+        var app = new Vue({
+            el: '#root',
+            data: {
+                message: 'hello world',
+                list: ['第一课的内容', '第二课的内容'],
+                inputValue: ''
+            },
+            methods: {
+                add() {
+                    this.list.push(this.inputValue)
+                    this.inputValue = ''
+                },
+                handleDeleteItem(index) {
+                    console.log(index, 'index');
+                    this.list.splice(index, 1)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
