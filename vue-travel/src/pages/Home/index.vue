@@ -1,6 +1,6 @@
 <template>
   <div>
-    <home-header :city='city' />
+    <home-header />
     <home-swiper :list='swiperList' />
     <home-icons :list='iconList' />
     <home-recommend :list='recommendList' />
@@ -48,8 +48,6 @@ export default {
             recommendList,
             weekendList,
           } = res.data.data
-
-          this.city = city || '北京'
           this.swiperList = swiperList
           this.iconList = iconList
           this.recommendList = recommendList
