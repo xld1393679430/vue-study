@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <style>
+        .v-enter-from {
+            opacity: 0;
+        }
+        .v-enter-active {
+            transition: opacity 1s ease-out;
+        }
+        .v-enter-to {
+            opacity: 1;
+        }
+
+        .v-leave-active {
+            transition: opacity 1s ease-in;
+        }
+        .v-leave-to {
+            opacity: 0;
+        }
+    </style>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        <transition>
+            <div v-show="show">内容</div>
+        </transition> 
+        <button @click="handleToggle">切换</button>
+    </div>
+</body>
+<script>
+    Vue.createApp({
+        data () {
+            return {
+                message: 'hello world!',
+                show: true
+            }
+        },
+        methods: {
+            handleToggle () {
+                this.show = !this.show
+            },
+        },
+    }).mount('#root')
+</script>
+</html>

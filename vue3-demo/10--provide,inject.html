@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="root">
+        <!-- <child-one :count="count"></child-one> -->
+        <!-- <br>
+        <child-two :count="count"></child-two> -->
+    </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: 'hello world!',
+                count: 222
+            }
+        },
+        provide() {
+            return {
+                count: this.count
+            }
+        },
+        template: `
+            <child-one :count="count"></child-one>
+        `
+    })
+
+    app.component('child-one', {
+        props: ['count'],
+        template: `
+            <div>child-one</div> 
+            <child-two></child-two>
+        `   
+    })
+
+    app.component('child-two', {
+        inject: ['count'],
+        template: `
+            <div>child-two</div>
+            <div>{{count}}</div>
+        `
+    })
+
+    const vm = app.mount('#root')
+    console.log(vm, 'vm');
+</script>
+
+</html>

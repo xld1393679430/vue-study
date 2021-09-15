@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{message}}</div>
+
+        <child v-bind="params" />
+    </div>
+</body>
+<script>
+    // v-bind: 自动展prop
+    const child = {
+        props: {
+            a: {
+                type: Number,
+                required: true,
+                validator(value) {
+                    return value > 100
+                },
+                default: 200
+            },
+            b: String
+        },
+        data () {
+            return {
+                msg: 'i am child component'
+            }
+        },
+        template: `
+            <div>{{a}}---{{b}}</div>
+        `
+    }
+
+    Vue.createApp({
+        data () {
+            return {
+                message: 'hello world!',
+                params: {
+                    a: 101,
+                    b: 'i am b'
+                }
+            }
+        },
+        components: {
+            child
+        }
+    }).mount('#root')
+</script>
+</html>

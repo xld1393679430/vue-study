@@ -37,7 +37,7 @@
     <script>
         // 如果不在transition标签上加name="fade"属性 那么过度动画则默认以`v`开头 比如 v-enter
         // 因为vue会尽可能的复用dom 所以需要给切换的组件添加不同的key， 需要重新渲染才能出现动画效果
-        // 添加mode
+        // 添加mode=‘out-in’控制动画的进入和退出顺序
 
 
         Vue.component('child-one', {

@@ -48,10 +48,10 @@
 
         <!--  配合Animate.css使用动画 -->
         <transition 
-        appear
-        enter-active-class='animated swing' 
-        leave-active-class='animated shake'
-        apper-active-class='animated swing'
+            appear
+            enter-active-class='animated swing' 
+            leave-active-class='animated shake'
+            apper-active-class='animated swing'
         >
             <div v-if="show2">我是内容</div>
         </transition>
@@ -61,7 +61,7 @@
     </div>
     <script>
         // 如果不在transition标签上加name="fade"属性 那么过度动画则默认以`v`开头 比如 v-enter
-        // 关于appear的用法和enter的用法相似，它只是在第一次渲染的时候才会起作用
+        // !!! 关于appear的用法和enter的用法相似，它只是在第一次渲染的时候才会起作用
         var vue = new Vue({
             el: '#root',
             data: {

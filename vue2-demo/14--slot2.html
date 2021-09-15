@@ -10,15 +10,23 @@
 <body>
     <div id="root">
         <div>{{message}}</div>
+        <!--  这是vue2的写法 -->
         <child>
             <template slot-scope="props">
-                <li>{{props.item}}</li>
+                <li>{{props.item.name}}</li>
             </template>
         </child>
 
+         <!-- 下面是vue3的写法 -->
+         <!-- 
+            <child v-slot="props">
+                 <li>{{props.item.name}}</li>
+            </child>
+          -->
+
         <child>
             <template slot-scope="p">
-                <div>{{p.item}}</div>
+                <div>{{p.item.name}}</div>
             </template>
         </child>
     </div>
@@ -27,7 +35,13 @@
         Vue.component('child', {
             data() {
                 return {
-                    list: [1, 2, 3]
+                    list: [
+                        {
+                            name: 'a',
+                        }, {
+                            name: 'b'
+                        }
+                    ]
                 }
             },
             template: `

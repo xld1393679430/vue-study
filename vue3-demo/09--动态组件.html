@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="root">
+        <!-- vue3 自闭合标签会有问题 https://vue3js.cn/docs/zh/style-guide/#%E8%87%AA%E9%97%AD%E5%90%88%E7%BB%84%E4%BB%B6%E5%BC%BA%E7%83%88%E6%8E%A8%E8%8D%90 -->
+
+        <!-- 传统切换组件 -->
+        <!-- 
+            <child-one v-show="current === 'child-one'" ></child-one>
+            <child-two v-show="current === 'child-two'" ></child-two> 
+        -->
+
+
+        <!-- 使用 component 切换组件 --> 
+        <!-- 这里如果不使用keep-alive 切换组件会导致不保留input输入的值， 所有可以使用keep-alive 保留组件切换前的状态 -->
+        <keep-alive>
+            <component :is="current"></component>
+        </keep-alive>
+        <div>
+            <button @click="handleToggle">切换组件</button>
+        </div>
+
+    </div>
+</body>
+<script>
+    const ChildOne = {
+        template: `
+            <div>
+                child-one: <input type="text" />
+            </div>
+        `
+    }
+
+    const ChildTwo = {
+        template: `
+            <div>
+                child-two: <input type="text" />
+            </div>
+        `
+    }
+
+    Vue.createApp({
+        data() {
+            return {
+                message: 'hello world!',
+                current: 'child-one'
+            }
+        },
+        components: {
+            ChildOne,
+            ChildTwo
+        },
+        methods: {
+            handleToggle() {
+                this.current = this.current === 'child-one' ? 'child-two' : 'child-one'
+            }
+        }
+    }).mount('#root')
+</script>
+
+</html>

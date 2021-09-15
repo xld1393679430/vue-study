@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        {{message}}
+        <div>
+            {{count}}
+            <button @click="handleClick">点我</button>
+        </div>
+    </div>
+</body>
+<script>
+    // 混入 mixins: 
+    // 1, mixins的优先级低于组件的data和methods， data/methods和mixins有相同则data会覆盖掉mixins, 
+    // 2, 生命周期函数先执行mixins 再执行组件内的生命周期，不会覆盖
+    const myData = {
+        data() {
+            return {
+                count: 10
+            }
+        },
+        mounted () {
+            console.log('mixins--mounted');
+        },
+        methods: {
+            handleClick () {
+                console.log('mixins---handleClick');
+            }
+        }
+    }
+    const app = Vue.createApp({
+        mixins: [myData],
+        data () {
+            return {
+                message: 'hello world!',
+                count: 1
+            }
+        },
+        mounted () {
+            console.log('component--mounted');
+        },
+        methods: {
+            handleClick () {
+                console.log('component---handleClick');
+            }
+        }
+    })
+    
+    const vm = app.mount('#root')
+</script>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <style>
+        .item {
+            display: inline-block;
+            margin-right: 30px;
+        }
+
+        .v-enter-from,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        /*  控制其他元素的动画生命周期 */
+        .v-move {
+            transition: all 0.5s ease-in;
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.5s ease-in;
+        }
+    </style>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="root">
+        <transition-group mode="out-in" appear>
+            <span class="item" v-for="item of list" :key="item">{{item}}</span>
+        </transition-group>
+        <button @click="handleAdd">增加</button>
+    </div>
+</body>
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                message: 'hello world!',
+                list: [3, 2, 1]
+            }
+        },
+        methods: {
+            handleAdd() {
+                this.list.unshift(this.list.length + 1)
+            }
+        }
+    }).mount('#root')
+</script>
+
+</html>
