@@ -24,7 +24,12 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register
-  },
+  }, {
+    path: '/shop',
+    name: 'Shop',
+    // !!! 异步组件加载 !!!
+    component: () => import( /* webpackChunkName: "shop" */ '../views/shop/Shop.vue')
+  }, 
 ]
 
 const router = createRouter({
