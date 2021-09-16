@@ -19,29 +19,63 @@
             <input type="text" v-model="age" />
             <span> {{age}}</span>
         </div>
+        <div>
+            <input type="text" v-model="book.name" />
+            <span> book.name: {{book.name}}</span>
+
+            <input type="text" v-model="book.price" />
+            <span> book.price: {{book.price}}</span>
+        </div>
     </div>
 </body>
 <script>
     const app = Vue.createApp({
         setup() {
-            const { ref, toRef, toRefs, reactive, watch } = Vue
+            const { ref, toRef, toRefs, reactive, watch, watchEffect } = Vue
             const name = ref('章三')
-            const student = reactive({id: 1, age: 20})
-            // 1, 具有一定的惰性 lazy
-            // 2, 可以获取监听值的当前的value和之前的value
-            watch(name, (cuurentValue, prevValue) => {
-                console.log(cuurentValue, prevValue, 1);
-            })
+            const student = reactive({ id: 1, age: 20 })
+            const book = reactive({ name: '红楼梦', price: 30 })
+            // watch
+            // 1,  具有一定的惰性 lazy (页面刚开始进入没有监听)
+            // 1-1, watch也可以变成非惰性的  增加 {immediate: true}属性即可 
+            // 2,  可以获取监听值的当前的value和之前的value
+            // 3， 可以监听一个值类型的变量， 也可以监听对象的值（监听多个的话可以使用数组）
+            // 4,  调用watch的返回值会停止当前的监听
+            // const stop1 = watch(name, (cuurentValue, prevValue) => {
+            //     console.log(cuurentValue, prevValue, 1);
+            // }, {
+            //     immediate: true
+            // })
 
-            watch(() => student.age, (cuurentValue, prevValue) => {
-                console.log(cuurentValue, prevValue, 2);
-            })
+            // watch(() => student.age, (cuurentValue, prevValue) => {
+            //     console.log(cuurentValue, prevValue, 2);
+            // })
 
-            const { age } = toRefs(student)
+            // watch([() => book.name, () => book.price], ([currentName, currentPrice ], [prevName, prevPrice]) => {
+            //     console.log(currentName, prevName,  currentPrice, prevPrice, 3);
+            // })
+
+            const age = toRef(student, 'age')
+
+            // watchEffect 
+            // 1 立即执行， 没用惰性 immediate
+            // 2 不需要传递监听的内容， 自动监听内部调用的值
+            // 3 不能获取监听数据变化之前的值
+            // 4 调用watchEffect的返回值会停止当前的监听
+            const stop2 = watchEffect(() => {
+                console.log('watchEffect', name.value);
+                console.log('watchEffect', book.name);
+
+                // 调用stop2会停止watchEffect的监听
+                setTimeout(() => {
+                    stop2()
+                }, 5000)
+            })
 
             return {
                 name,
                 age,
+                book,
             }
         }
     })

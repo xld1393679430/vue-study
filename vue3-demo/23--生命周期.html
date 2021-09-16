@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        <div>
+            <span>{{name}}</span>
+            <button @click="handleChangeName">chang Name</button>
+        </div>
+    </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        // vue2           => vue3
+        // beforeCreate   => setup
+        // created        => setup
+        // beforeMount    => onBeforeMount
+        // mounted        => onMounted
+        // eforeUpdate    => onBeforeUpdate
+        // updated        => onUpdated
+        // beforeDestroy  => onBeforeUnmount
+        // destroyed      => onUnmounted
+        // activated      => onActivated
+        // deactivated    => onDeactivated
+        // errorCaptured  => onErrorCaptured
+        
+        //  vue3 新的生命周期
+        // onRenderTracked： 每次渲染后重新收集响应式依赖
+        // onRenderTriggered: 每次触发页面重新渲染时自动触发
+
+        setup () {
+            const {
+                ref,
+                onBeforeMount,
+                onMounted,
+                onBeforeUpdate,
+                onUpdated,
+                onBeforeUnmount,
+                onUnmounted,
+                onRenderTracked,
+                onRenderTriggered,
+            } = Vue
+
+            onBeforeMount(() => {
+                console.log('onBeforeMount');
+            })
+            onMounted(() => {
+                console.log('onBeforeMount');
+            })
+            onBeforeUpdate(() => {
+                console.log('onBeforeUpdate');
+            })
+            onUpdated(() => {
+                console.log('onUpdated');
+            })
+            onBeforeUnmount(() => {
+                console.log('onBeforeUnmount');
+            })
+            onUnmounted(() => {
+                console.log('onUnmounted');
+            })
+            onRenderTracked(() => {
+                console.log('onRenderTracked');
+            })
+            onRenderTriggered(() => {
+                console.log('onRenderTriggered');
+            })
+
+            const name = ref('章三')
+            const handleChangeName = () => {
+                name.value = '李四'
+            }
+
+            return {
+                name,
+                handleChangeName
+            }
+        }
+    })
+    
+    const vm = app.mount('#root')
+</script>
+</html>

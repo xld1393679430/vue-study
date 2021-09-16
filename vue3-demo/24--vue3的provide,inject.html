@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        <child />
+    </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        setup () {
+            const { ref, provide} = Vue
+            const name =ref('章三')
+            provide('name', name)
+            provide('changeName', (value) => {
+                name.value = value
+            })
+            return {}
+        }
+    })
+
+    app.component('child', {
+        setup () {
+            const { inject } = Vue
+            const name = inject('name', '默认值')
+            const changeName = inject('changeName')
+            const handleChangeName = () => {
+                changeName('李四')
+            }
+            return {
+                name,
+                handleChangeName
+            }
+        },
+        template: `
+            <div>
+                <span>{{name}}</span>
+                <button @click="handleChangeName">change Name </button>
+            </div>
+        `
+    })
+    
+    const vm = app.mount('#root')
+</script>
+</html>
