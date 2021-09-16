@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        <div>name: {{name}} -- <input type="text" v-model="name" /></div>
+        <div>age: {{age}} -- <input type="text" v-model.number="age" /></div>
+    </div>
+</body>
+<script>
+    // plugin 插件案例
+    
+    const app = Vue.createApp({
+        data () {
+            return {
+                message: 'hello world!',
+                name: '张三',
+                age: 20
+            }
+        },
+        rules: {
+            name: {
+                validator: name => name.length > 1,
+                message: '名称长度小于1位，不合法'
+            },
+            age: {
+                validator: age => age > 18,
+                message: '年龄小于18岁，不合法'
+            },
+        }
+
+    })
+
+    const validatorPlugin = (app, options) => {
+        app.mixin({
+            mounted() {
+                const rules = this.$options.rules
+                for(let key in rules) {
+                    const item = rules[key]
+                    this.$watch(key, (value) => {
+                        const isValidated = item.validator(value)
+                        if (!isValidated) {
+                            console.error(item.message)
+                        }
+                    })
+                }
+            }
+        })
+    }
+
+    app.use(validatorPlugin)
+    
+    const vm = app.mount('#root')
+</script>
+</html>

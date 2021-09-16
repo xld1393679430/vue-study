@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <style>
+        .area {
+            position: absolute;
+            top: 50%;
+            bottom: 0;
+            left: 50%;
+            right: 0;
+            background-color: #ccc;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 220px;
+        }
+
+        .mask {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: pink;
+            opacity: 0.5;
+        }
+    </style>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div class="area">
+            <button @click="handleClick">按钮</button>
+            <teleport to="body">
+                <div class="mask" v-show="show"></div>
+            </teleport>
+        </div>
+    </div>
+</body>
+<script>
+    // Teleport 传送门
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: 'hello world!',
+                show: false
+            }
+        },
+        methods: {
+            handleClick() {
+                this.show = !this.show
+            },
+        },
+    })
+
+    const vm = app.mount('#root')
+</script>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{name}}</div>
+        <div>
+            <div v-if="showTips">2s后学生信息发生改变</div>
+            <div>student.age: {{student.age}}</div>
+            <div>student.score: {{student.score}}</div>
+        </div>
+    </div>
+</body>
+<script>
+    // setup: setup执行顺序是在beforeCreate之前的 内部this不存在  
+    // setup内部不可以调用组件的属性， 组件内部可以调用setup内部的属性
+    // ref 处理基础类型的数据
+    // reactive 处理非基础类型的数据
+    const app = Vue.createApp({
+        data () {
+            return {
+                message: 'hello world!'
+            }
+        },
+        mounted () {
+            // 这里是可以获取setup内部的返回值， 相反 setup 不可以获取组件的属性
+            console.log(this.$options.setup().name);
+        },
+        setup () {
+            const { ref, reactive } = Vue
+            // ref： proxy '张三' 变成 proxy({name: '张三'}) 这样的一个响应式引用
+            let name = ref('张三')
+            let showTips = ref(true)
+            let student = reactive({
+                age: 10,
+                score: 100
+            })
+            setTimeout(() => {
+                name.value = '李四'
+                student.age = 20
+                student.score = 90
+                showTips.value = false
+            }, 2000)
+
+            return {
+                name,
+                student,
+                showTips,
+            }
+        } 
+    })
+    
+    const vm = app.mount('#root')
+</script>
+</html>

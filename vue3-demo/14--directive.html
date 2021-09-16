@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <style>
+        .abs {
+            position: absolute;
+        }
+    </style>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    // 局部指令
+    const partDirectives = {
+        pos: {
+            mounted (el, binding) {
+                console.log(binding, 'binding');
+                const { arg = 'top', value} = binding
+                el.style[arg] = value + 'px'
+            },
+            updated (el, binding) {
+                const { arg = 'top', value} = binding
+                el.style[arg] = value + 'px'
+            }
+        }
+    }
+    const app = Vue.createApp({
+        // 定义局部指令： directives
+        directives: partDirectives,
+        data() {
+            return {
+                message: 'hello world!',
+                top1: 100,
+                top2: 200
+            }
+        },
+        template: `
+            <div>
+                <input v-focus />
+                <div>
+                    <input class="abs" v-pos="top1" />
+                    <input class="abs" v-pos:left="top2" />
+                </div>
+            </div>
+        `
+    })
+
+    // 全局指令
+    app.directive('focus', {
+        mounted(el) {
+            el.focus()
+        }
+    });
+
+    const vm = app.mount('#root')
+</script>
+
+</html>

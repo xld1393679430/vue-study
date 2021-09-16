@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div>
+            <input type="text" v-model="name" />
+            <span> {{name}}</span>
+        </div>
+        <div>
+            <input type="text" v-model="age" />
+            <span> {{age}}</span>
+        </div>
+    </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        setup() {
+            const { ref, toRef, toRefs, reactive, watch } = Vue
+            const name = ref('章三')
+            const student = reactive({id: 1, age: 20})
+            // 1, 具有一定的惰性 lazy
+            // 2, 可以获取监听值的当前的value和之前的value
+            watch(name, (cuurentValue, prevValue) => {
+                console.log(cuurentValue, prevValue, 1);
+            })
+
+            watch(() => student.age, (cuurentValue, prevValue) => {
+                console.log(cuurentValue, prevValue, 2);
+            })
+
+            const { age } = toRefs(student)
+
+            return {
+                name,
+                age,
+            }
+        }
+    })
+
+    const vm = app.mount('#root')
+</script>
+
+</html>

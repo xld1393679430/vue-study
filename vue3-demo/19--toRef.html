@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3</title>
+    <script src="http://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        <div>name: {{name}}</div>
+        <div>score: {{score}}</div>
+    </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        setup () {
+            const { toRefs, toRef, reactive } = Vue
+            let student = reactive({ name: '张三', age: 20 })
+            let { name } = toRefs(student)
+            // toRef: 避免toRefs 解构出来的key不存在 程序报错的情况
+            let score = toRef(student, 'score')
+            setTimeout(() => {
+                name.value = '李四'
+                score.value = 100
+            }, 2000)
+
+            return {
+                name,
+                score,
+            }
+        }
+    })
+    
+    const vm = app.mount('#root')
+</script>
+</html>
