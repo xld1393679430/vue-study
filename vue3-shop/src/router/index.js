@@ -23,15 +23,7 @@ const routes = [
   }, {
     path: '/register',
     name: 'Register',
-    component: Register,
-    beforeEnter(to, from, next) {
-      const isLogin = localStorage.isLogin
-      if (isLogin) {
-        next({ name: 'Home' })
-      } else {
-        next()
-      }
-    }
+    component: Register
   },
 ]
 

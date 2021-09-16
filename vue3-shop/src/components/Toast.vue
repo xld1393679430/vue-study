@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-export const useToastEffect = () => {
+import { reactive, toRefs } from "vue";
+export const toastConfigure = () => {
   const toastData = reactive({
     show: false,
     message: "",
@@ -19,8 +19,11 @@ export const useToastEffect = () => {
     }, 2000);
   };
 
+  const { show, message } = toRefs(toastData)
+
   return {
-    toastData,
+    show, 
+    message,
     toggleToast,
   };
 };

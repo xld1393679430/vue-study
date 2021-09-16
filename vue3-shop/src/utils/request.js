@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-
 export const post = (url, data = {}) => {
     return new Promise((resolve, reject) => {
         axios.post(url, data, {

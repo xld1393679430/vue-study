@@ -7,7 +7,7 @@
     />
     <div class="wrapper__input">
       <input
-        v-model="data.username"
+        v-model="username"
         type="text"
         placeholder="请输入用户名"
         class="wrapper__input__content"
@@ -15,7 +15,7 @@
     </div>
     <div class="wrapper__input">
       <input
-        v-model="data.password"
+        v-model="password"
         type="text"
         placeholder="请输入密码"
         class="wrapper__input__content"
@@ -25,50 +25,83 @@
     <div class="wrapper__login-button" @click="handleLogin">登陆</div>
     <div class="wrapper__login-link" @click="handleRegister">注册</div>
 
-    <Toast v-show="toastData.show" :message="toastData.message" />
+    <Toast v-show="show" :message="message" />
   </div>
 </template>
 
 <script>
-import { reactive } from "vue";
+import { reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { post } from "../../utils/request";
-import Toast, { useToastEffect } from "../../components/Toast.vue";
+import Toast, { toastConfigure } from "../../components/Toast.vue";
+
+const useToastEffect = () => {
+  const { show, message, toggleToast } = toastConfigure();
+  return {
+    show,
+    message,
+    toggleToast,
+  };
+};
+
+const useLoginEffect = (toggleToast) => {
+  const router = useRouter();
+  const data = reactive({ username: "", password: "" });
+  const handleLogin = async () => {
+    try {
+      if (!data.username || !data.password) {
+        toggleToast("请输入用户信息");
+        return
+      }
+      const result = await post("/api/user/login", {
+        username: data.username,
+        password: data.password,
+      });
+      if (result?.errno === 0) {
+        toggleToast("登陆成功");
+        localStorage.isLogin = true;
+        router.push({ name: "Home" });
+      } else {
+        toggleToast("接口登陆失败");
+      }
+    } catch (error) {
+      toggleToast("接口请求失败");
+    }
+  };
+
+  const { username, password } = toRefs(data);
+  return {
+    username,
+    password,
+    handleLogin,
+  };
+};
+
+const useRegisterEffect = () => {
+  const router = useRouter();
+  const handleRegister = () => {
+    router.push({ name: "Register" });
+  };
+
+  return {
+    handleRegister,
+  };
+};
 
 export default {
   name: "Login",
   components: { Toast },
   setup() {
-    const router = useRouter();
-    const data = reactive({ username: "", password: "" });
-    const { toastData, toggleToast } = useToastEffect();
-
-    const handleLogin = async () => {
-      try {
-        const result = await post("/api/user/login", {
-          username: data.username,
-          password: data.password,
-        });
-        if (result?.errno === 0) {
-          toggleToast("登陆成功");
-          localStorage.isLogin = true;
-          router.push({ name: "Home" });
-        } else {
-          toggleToast("接口登陆失败");
-          console.log(toastData, 'toastData');
-        }
-      } catch (error) {
-        toggleToast("接口请求失败");
-      }
-    };
-
-    const handleRegister = () => {
-      router.push({ name: "Register" });
-    };
+    const { show, message, toggleToast } = useToastEffect();
+    const { username, password, handleLogin } = useLoginEffect(toggleToast);
+    const { handleRegister } = useRegisterEffect();
 
     return {
-      data,
-      toastData,
+      username,
+      password,
+      show,
+      message,
+      toggleToast,
       handleLogin,
       handleRegister,
     };
