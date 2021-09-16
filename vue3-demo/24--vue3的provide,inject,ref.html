@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,30 +8,45 @@
     <title>Vue3</title>
     <script src="http://unpkg.com/vue@next"></script>
 </head>
+
 <body>
     <div id="root">
+        <div ref="hello">hello</div>
         <child />
     </div>
 </body>
 <script>
+    // provide, inject, ref
     const app = Vue.createApp({
-        setup () {
-            const { ref, provide} = Vue
-            const name =ref('章三')
-            provide('name', name)
+        setup() {
+            // readonly 防止值被修改
+            const { ref, provide, readonly, onMounted } = Vue
+            const name = ref('章三')
+            provide('name', readonly(name))
             provide('changeName', (value) => {
                 name.value = value
             })
-            return {}
+
+            // 获取dom节点
+            const hello = ref(null)
+
+            onMounted(() => {
+                console.log(hello.value, 'hello');
+            })
+            return {
+                hello
+            }
         }
     })
 
     app.component('child', {
-        setup () {
+        setup() {
             const { inject } = Vue
+            // inject 第二个参数表示获取不到name， 则给name赋一个默认值
             const name = inject('name', '默认值')
             const changeName = inject('changeName')
             const handleChangeName = () => {
+                // name.value = '这种修改不正确' //1, 子组件不能修改父组件的值， 2，name被readonly代理了，强行修改会警告⚠️
                 changeName('李四')
             }
             return {
@@ -45,7 +61,8 @@
             </div>
         `
     })
-    
+
     const vm = app.mount('#root')
 </script>
+
 </html>
