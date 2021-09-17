@@ -73,7 +73,12 @@
         <div class="check__info">
           总计：<span class="check__info__price">&yen; {{ totalPrice }} </span>
         </div>
-        <div class="check__btn">去结算</div>
+
+        <router-link :to="`/orderConfirmation/${shopId}`">
+          <div class="check__btn">
+            去结算
+          </div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -139,7 +144,7 @@ export default {
       }
       return isAllCheck;
     });
-    
+
     const handleChangeProductCheck = (shopId, productId) => {
       store.commit("changeProductCheck", { shopId, productId });
     };
@@ -277,7 +282,7 @@ export default {
       right: 0;
       bottom: 0.12rem;
       &__count {
-        font-size: .14rem;
+        font-size: 0.14rem;
       }
       &__minus,
       &__plus {
@@ -345,9 +350,12 @@ export default {
   &__btn {
     width: 0.98rem;
     background-color: #4fb0f9;
-    color: #fff;
     font-size: 0.14rem;
     text-align: center;
   }
+  a {
+      color: #fff;
+      text-decoration: none;
+    }
 }
 </style>

@@ -2,7 +2,7 @@
   <div class="docker">
     <div
       v-for="(item, index) of dockerList"
-      :class="{ docker__item: true, 'docker__item--active': index === 0 }"
+      :class="{ docker__item: true, 'docker__item--active': index === current }"
       :key="item.text"
     >
       <router-link :to="item.to">
@@ -16,6 +16,7 @@
 <script>
 export default {
   name: "Docker",
+  props: ["current"],
   setup() {
     const dockerList = [
       {
@@ -36,7 +37,7 @@ export default {
       {
         icon: "&#xe612;",
         text: "我的",
-        to: { name: "CartList" },
+        to: { name: "My" },
       },
     ];
 

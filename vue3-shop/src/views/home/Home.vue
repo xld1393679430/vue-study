@@ -4,7 +4,7 @@
       <StaticPart />
       <Nearby />
     </div>
-    <Docker />
+    <Docker :current="0" />
   </div>
 </template>
 
