@@ -25,9 +25,17 @@
           </p>
         </div>
         <div class="product__number">
-          <span class="product__number__minus">-</span>
-          <span>0</span>
-          <span class="product__number__plus">+</span>
+          <span
+            class="product__number__minus"
+            @click="() => handleChangeCart(shopId, item._id, item, -1)"
+            >-</span
+          >
+          <span>{{ cartList?.[shopId]?.[item._id]?.count || 0 }}</span>
+          <span
+            class="product__number__plus"
+            @click="() => handleChangeCart(shopId, item._id, item, 1)"
+            >+</span
+          >
         </div>
       </div>
     </div>
@@ -39,6 +47,7 @@
 <script>
 import { ref, reactive, toRefs, watchEffect } from "vue";
 import { useRoute } from "vue-router";
+import { useCommonCartEffect } from "./commonCartEffect";
 import { get } from "../../utils/request";
 import Toast, { toastConfigure } from "../../components/Toast.vue";
 
@@ -78,9 +87,7 @@ const useTabEffect = () => {
   };
 };
 
-const useContentListEffect = (currentTab, toggleToast) => {
-  const route = useRoute();
-  const shopId = route.params.id;
+const useContentListEffect = (currentTab, toggleToast, shopId) => {
   const data = reactive({ list: [] });
 
   const getContentList = async () => {
@@ -106,9 +113,12 @@ export default {
   name: "ShopContent",
   components: { Toast },
   setup() {
+    const route = useRoute();
+    const shopId = route.params.id;
     const { show, message, toggleToast } = useToastEffect();
     const { currentTab, handleChangeTab } = useTabEffect();
-    const { list } = useContentListEffect(currentTab, toggleToast);
+    const { list } = useContentListEffect(currentTab, toggleToast, shopId);
+    const { cartList, handleChangeCart } = useCommonCartEffect();
 
     return {
       show,
@@ -116,6 +126,9 @@ export default {
       categaries,
       currentTab,
       list,
+      cartList,
+      shopId,
+      handleChangeCart,
       handleChangeTab,
     };
   },
