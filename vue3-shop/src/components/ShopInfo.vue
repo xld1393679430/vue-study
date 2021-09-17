@@ -1,6 +1,6 @@
 <template>
   <div class="shop">
-      <img class="shop__img" :src="shop.imgUrl" alt="" />
+      <img class="shop__img" :src="shop.imgUrl" v-show="shop.imgUrl" alt="shop" />
       <div :class="{'shop__content': true, 'shop__content--border': showBorder}">
         <div class="shop__content__title">沃尔玛</div>
         <div class="shop__content__tags">

@@ -112,7 +112,7 @@ export default {
 .search {
   margin-bottom: 0.12rem;
   line-height: 0.32rem;
-  background-color: #f5f5f5;
+  background-color: $search-bg-color;
   color: #b7b7b7;
   border-radius: 0.16rem;
   font-size: 0.14rem;

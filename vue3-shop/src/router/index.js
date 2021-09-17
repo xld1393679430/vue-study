@@ -25,7 +25,7 @@ const routes = [
     name: 'Register',
     component: Register
   }, {
-    path: '/shop',
+    path: '/shop/:id',
     name: 'Shop',
     // !!! 异步组件加载 !!!
     component: () => import( /* webpackChunkName: "shop" */ '../views/shop/Shop.vue')
