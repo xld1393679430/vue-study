@@ -174,7 +174,7 @@ export default {
     margin: 0.32rem 0.4rem 0.16rem;
     line-height: 0.48rem;
     font-size: 0.16rem;
-    color: #fff;
+    color: $bgColor;
     text-align: center;
   }
   &__register-link {

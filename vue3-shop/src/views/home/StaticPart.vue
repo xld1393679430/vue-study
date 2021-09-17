@@ -6,7 +6,7 @@
       <span class="iconfont position__notice">&#xe7e5;</span>
     </div>
     <div class="search">
-      搜索内容
+      <input class="search__input" type="text" placeholder="搜索内容">
     </div>
     <div class="banner">
       <img
@@ -112,11 +112,18 @@ export default {
 .search {
   margin-bottom: 0.12rem;
   line-height: 0.32rem;
-  background-color: $search-bg-color;
+  background-color: $content-bg-color;
   color: #b7b7b7;
   border-radius: 0.16rem;
   font-size: 0.14rem;
-  padding-left: 0.25rem;
+  padding: 0 0.25rem;
+  &__input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: none;
+  }
 }
 .banner {
   height: 0;

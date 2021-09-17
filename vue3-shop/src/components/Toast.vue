@@ -10,13 +10,13 @@ export const toastConfigure = () => {
     message: "",
   });
 
-  const toggleToast = (message) => {
+  const toggleToast = (message, delay = 2000) => {
     toastData.show = true;
     toastData.message = message;
     setTimeout(() => {
       toastData.show = false;
       toastData.message = "";
-    }, 2000);
+    }, delay);
   };
 
   const { show, message } = toRefs(toastData)
@@ -35,6 +35,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../style/variables.scss";
+
 .toast {
   position: fixed;
   left: 50%;
@@ -43,6 +45,6 @@ export default {
   background: rgba(0, 0, 0, 0.35);
   padding: 0.1rem;
   border-radius: 0.05rem;
-  color: #fff;
+  color: $bgColor;
 }
 </style>

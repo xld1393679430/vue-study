@@ -8,6 +8,8 @@
       </div>
     </div>
     <ShopInfo :shop="shop" :showBorder="false" />
+    <ShopContent />
+    <ShopCart />
   </div>
 </template>
 
@@ -15,6 +17,8 @@
 import { reactive, toRefs } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import ShopInfo from "../../components/ShopInfo.vue";
+import ShopContent from "./Content.vue"
+import ShopCart from './Cart.vue'
 import { get } from "../../utils/request";
 
 const useShopInfoEffect = () => {
@@ -46,7 +50,7 @@ const useBackEffect = () => {
 
 export default {
   name: "Shop",
-  components: { ShopInfo },
+  components: { ShopInfo, ShopContent, ShopCart },
   setup() {
     const { shop, getShopInfo } = useShopInfoEffect();
     const { handleBack } = useBackEffect();
@@ -77,7 +81,7 @@ export default {
   &__content {
     display: flex;
     flex: 1;
-    background-color: $search-bg-color;
+    background-color: $content-bg-color;
     border-radius: 0.16rem;
     &__icon {
       width: 0.44rem;
