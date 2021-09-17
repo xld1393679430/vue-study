@@ -50,7 +50,7 @@
                 @click="() => handleChangeCart(shopId, item._id, item, -1)"
                 >-</span
               >
-              <span>{{ item.count || 0 }}</span>
+              <span class="product__number__count">{{ item.count || 0 }}</span>
               <span
                 class="product__number__plus"
                 @click="() => handleChangeCart(shopId, item._id, item, 1)"
@@ -94,7 +94,7 @@ export default {
     const showCartProducts = ref(false);
 
     let totalCount = computed(() => {
-      const productList = cartList[shopId];
+      const productList = cartList[shopId]?.productList;
       let count = 0;
       if (productList) {
         for (let i in productList) {
@@ -106,7 +106,7 @@ export default {
     });
 
     let totalPrice = computed(() => {
-      const productList = cartList[shopId];
+      const productList = cartList[shopId]?.productList;
       let price = 0;
       if (productList) {
         for (let i in productList) {
@@ -120,11 +120,11 @@ export default {
     });
 
     let list = computed(() => {
-      return cartList[shopId] || [];
+      return cartList[shopId]?.productList || [];
     });
 
     let allCheck = computed(() => {
-      const productList = cartList[shopId];
+      const productList = cartList[shopId]?.productList;
       let isAllCheck = true;
       if (productList) {
         for (let i in productList) {
@@ -154,7 +154,9 @@ export default {
     };
 
     const handleToggleCartProducts = () => {
-      showCartProducts.value = !showCartProducts.value;
+      if (totalCount.value > 0) {
+        showCartProducts.value = !showCartProducts.value;
+      }
     };
 
     return {
@@ -274,12 +276,15 @@ export default {
       position: absolute;
       right: 0;
       bottom: 0.12rem;
+      &__count {
+        font-size: .14rem;
+      }
       &__minus,
       &__plus {
         display: inline-block;
-        width: 0.2rem;
-        height: 0.2rem;
-        line-height: 0.16rem;
+        width: 0.18rem;
+        height: 0.18rem;
+        line-height: 0.2rem;
         border-radius: 50%;
         font-size: 0.2rem;
         text-align: center;
@@ -288,12 +293,12 @@ export default {
       &__minus {
         border: 0.01rem solid #666;
         color: #666;
-        margin-right: 0.05rem;
+        margin-right: 0.08rem;
       }
       &__plus {
         background-color: #0091ff;
         color: $bgColor;
-        margin-left: 0.05rem;
+        margin-left: 0.08rem;
       }
     }
   }

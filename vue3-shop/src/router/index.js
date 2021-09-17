@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/home/Home.vue'
 import Login from '../views/login/Login.vue'
 import Register from '../views/register/Register.vue'
+import CartList from '../views/cartList/CartList.vue'
 
 const routes = [
   {
@@ -29,6 +30,10 @@ const routes = [
     name: 'Shop',
     // !!! 异步组件加载 !!!
     component: () => import( /* webpackChunkName: "shop" */ '../views/shop/Shop.vue')
+  }, {
+    path: '/cartList',
+    name: 'CartList',
+    component: CartList
   }, 
 ]
 

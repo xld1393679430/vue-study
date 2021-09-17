@@ -5,8 +5,10 @@
       :class="{ docker__item: true, 'docker__item--active': index === 0 }"
       :key="item.text"
     >
-      <div class="iconfont" v-html="item.icon"></div>
-      <div class="docker__title">{{ item.text }}</div>
+      <router-link :to="item.to">
+        <div class="iconfont" v-html="item.icon"></div>
+        <div class="docker__title">{{ item.text }}</div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -19,18 +21,22 @@ export default {
       {
         icon: "&#xe745;",
         text: "首页",
+        to: { name: "Home" },
       },
       {
         icon: "&#xe638;",
         text: "购物车",
+        to: { name: "CartList" },
       },
       {
         icon: "&#xe636;",
         text: "订单",
+        to: { name: "CartList" },
       },
       {
         icon: "&#xe612;",
         text: "我的",
+        to: { name: "CartList" },
       },
     ];
 
@@ -54,12 +60,17 @@ export default {
   height: 0.49rem;
   box-sizing: border-box;
   border-top: 0.01rem solid $content-bg-color;
-  color: $content-font-color;
   &__item {
     flex: 1;
     text-align: center;
+    a {
+      color: $content-font-color;
+      text-decoration: none;
+    }
     &--active {
-      color: #1fa4fc;
+      a {
+        color: #1fa4fc;
+      }
     }
     .iconfont {
       margin: 0.07rem 0 0.02rem;

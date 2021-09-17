@@ -27,13 +27,25 @@
         <div class="product__number">
           <span
             class="product__number__minus"
-            @click="() => handleChangeCart(shopId, item._id, item, -1)"
+            @click="
+              () => {
+                handleChangeCart(shopId, item._id, item, -1, shopName);
+                changeShopName(shopId, shopName);
+              }
+            "
             >-</span
           >
-          <span>{{ cartList?.[shopId]?.[item._id]?.count || 0 }}</span>
+          <span class="product__number__count">{{
+            cartList?.[shopId]?.productList?.[item._id]?.count || 0
+          }}</span>
           <span
             class="product__number__plus"
-            @click="() => handleChangeCart(shopId, item._id, item, 1)"
+            @click="
+              () => {
+                handleChangeCart(shopId, item._id, item, 1);
+                changeShopName(shopId, shopName);
+              }
+            "
             >+</span
           >
         </div>
@@ -47,6 +59,7 @@
 <script>
 import { ref, reactive, toRefs, watchEffect } from "vue";
 import { useRoute } from "vue-router";
+import { useStore } from 'vuex'
 import { useCommonCartEffect } from "./commonCartEffect";
 import { get } from "../../utils/request";
 import Toast, { toastConfigure } from "../../components/Toast.vue";
@@ -88,6 +101,7 @@ const useTabEffect = () => {
 };
 
 const useContentListEffect = (currentTab, toggleToast, shopId) => {
+  const store = useStore()
   const data = reactive({ list: [] });
 
   const getContentList = async () => {
@@ -100,24 +114,30 @@ const useContentListEffect = (currentTab, toggleToast, shopId) => {
     }
   };
 
+  const changeShopName = (shopId, shopName) => {
+    store.commit('changeShopName', { shopId, shopName })
+  }
+
   watchEffect(() => getContentList());
 
   const { list } = toRefs(data);
 
   return {
     list,
+    changeShopName,
   };
 };
 
 export default {
   name: "ShopContent",
+  props: ['shopName'],
   components: { Toast },
   setup() {
     const route = useRoute();
     const shopId = route.params.id;
     const { show, message, toggleToast } = useToastEffect();
     const { currentTab, handleChangeTab } = useTabEffect();
-    const { list } = useContentListEffect(currentTab, toggleToast, shopId);
+    const { list, changeShopName } = useContentListEffect(currentTab, toggleToast, shopId);
     const { cartList, handleChangeCart } = useCommonCartEffect();
 
     return {
@@ -130,6 +150,7 @@ export default {
       shopId,
       handleChangeCart,
       handleChangeTab,
+      changeShopName,
     };
   },
 };
@@ -213,12 +234,15 @@ export default {
       position: absolute;
       right: 0;
       bottom: 0.12rem;
+      &__count {
+        font-size: .14rem;
+      }
       &__minus,
       &__plus {
         display: inline-block;
-        width: 0.2rem;
-        height: 0.2rem;
-        line-height: 0.16rem;
+        width: 0.18rem;
+        height: 0.18rem;
+        line-height: 0.2rem;
         border-radius: 50%;
         font-size: 0.2rem;
         text-align: center;
@@ -227,12 +251,12 @@ export default {
       &__minus {
         border: 0.01rem solid #666;
         color: #666;
-        margin-right: 0.05rem;
+        margin-right: 0.08rem;
       }
       &__plus {
         background-color: #0091ff;
         color: $bgColor;
-        margin-left: 0.05rem;
+        margin-left: 0.08rem;
       }
     }
   }
